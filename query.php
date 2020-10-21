@@ -1,5 +1,5 @@
 <?php
-
+//kommentarsveinung 
 //echo $_SERVER["DOCUMENT_ROOT"];
 //console.log("hallo");
 
