@@ -1,7 +1,5 @@
 <?php
 
-// heiheihie 
-//DETTE ER 1: non-personalized - ranked low to high in terms of salt 
 
 //echo $_SERVER["DOCUMENT_ROOT"];
 //console.log("hallo");
