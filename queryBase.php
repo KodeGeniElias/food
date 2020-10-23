@@ -107,7 +107,7 @@ if (!file_exists($index_file)) {
         foreach ($data as $key => $value) {
 
             $r_title = $value[0];
-            $r_image = $value[10];
+            $r_image = $value[11];
            // echo $r_image;
            // echo strlen($r_image)."<br>";
            // echo substr($r_image,strripos($r_image,"/"));
@@ -115,7 +115,7 @@ if (!file_exists($index_file)) {
            //$r_image = "imageselection/{$r_image}.jpg")
           // $r_image = "images/thumbnail.".substr($r_image,strripos($r_image,"/")+1);   //als je afbeeldingen toevoegt moet je die denk ik in de thumbnail map gooien
            $r_image = "images/".substr($r_image,strripos($r_image,"/")+1);   //TEST REGEL - VERWIJDEREN
-            $r_rating = $value[4];
+            $r_rating = $value[2];
               //add a column of FSA scores to the csv document (keep it in tab-separated format to be sure)
                                     //don't know why but the value 6 does not work. The value 2 does work...
             //echo $key." ".$r_title."<br>";
