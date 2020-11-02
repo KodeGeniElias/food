@@ -26,7 +26,7 @@ $cache = Zend_Cache::factory('Core','File',$frontendOptions,$backendOptions);
 */
 
 function sortByOrder($a, $b) {
-    return $a['rating'] - $b['rating'];
+    return $a['fsa'] - $b['fsa'];
 }
 
 function deleteDir($dirPath) {
@@ -46,7 +46,6 @@ function deleteDir($dirPath) {
     }
     rmdir($dirPath);
 }
-
 
 $index_file = $_SERVER["DOCUMENT_ROOT"].'/Food/index4';
 //$index_file = $_SERVER["DOCUMENT_ROOT"].'/d828113e/Food/index4';
@@ -84,7 +83,7 @@ if (!file_exists($index_file)) {
         foreach ($data as $key => $value) {
 
             $r_title = $value[0];
-            $r_image = $value[10];
+            $r_image = $value[11];
            // echo $r_image;
            // echo strlen($r_image)."<br>";
            // echo substr($r_image,strripos($r_image,"/"));
