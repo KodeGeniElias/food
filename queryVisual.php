@@ -85,7 +85,7 @@ if (!file_exists($index_file)) {
         foreach ($data as $key => $value) {
 
             $r_title = $value[0];
-            $r_image = $value[10];
+            $r_image = $value[11];
            // echo $r_image;
            // echo strlen($r_image)."<br>";
            // echo substr($r_image,strripos($r_image,"/"));
