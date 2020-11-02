@@ -47,7 +47,7 @@ function deleteDir($dirPath) {
     rmdir($dirPath);
 }
 
-
+//testendring
 $index_file = $_SERVER["DOCUMENT_ROOT"].'/Food/index4';
 //$index_file = $_SERVER["DOCUMENT_ROOT"].'/d828113e/Food/index4';
 //console.log($_SERVER["DOCUMENT_ROOT"]);
