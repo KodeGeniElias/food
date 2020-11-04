@@ -3,6 +3,31 @@
 
 //DETTE ER 3: personalized - ranked low to high in terms of salt
 
+//save new column
+$ncolumn = 0;
+
+//kolonnen med kalorier er linje 17 i filen
+if(lcal !=false){
+    $ncolumnm = 15;
+}
+
+if(hcal !=false){
+    $ncolumnm = 15;
+}
+
+
+
+//kolonnen med fett er linje 16 i filen
+if(lfat !=false){
+    $ncolumnm = 14;
+}
+
+if(hfat !=false){
+    $ncolumnm = 14;
+}
+
+
+
 //echo $_SERVER["DOCUMENT_ROOT"];
 //console.log("hallo");
 
