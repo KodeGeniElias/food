@@ -87,7 +87,7 @@ $_SESSION['c4qt']=$d[3];
             <!--these will be set by the script -->
 			<input type=hidden name="subject" value="<?php echo($subject)?>">
 			<input type=hidden id="condnum" name="condnum" value="<?php echo($condnum)?>">
-           <input id="choice" type=hidden name="choice" value="">
+            <input id="choice" type=hidden name="choice" value="">
 
 
         <header class="w3-container w3-blue w3-center">
