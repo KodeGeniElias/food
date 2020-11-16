@@ -84,6 +84,9 @@ mysqli_close($link);
 if ($_SESSION['subject']!=$subject) {$_SESSION['subject']=$subject;}
 if ($_SESSION['condnum']!=$condnum) {$_SESSION['condnum']=$condnum;}
 
+
+$_SESSION['choice'] = $_POST['cooking'];
+
 /* Redirect to a different page in the current directory that was requested */
 $host  = $_SERVER['HTTP_HOST'];
 $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');

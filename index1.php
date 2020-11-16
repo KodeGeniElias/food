@@ -16,9 +16,26 @@ if (isset($_GET['subject'])) {$subject=$_GET['subject'];$_SESSION['subject']=$su
 		}
 if (isset($_GET['condnum'])) {$condnum=$_GET['condnum'];}
  else {
-	 if (isset($_SESSION['condnum'])) {$condnum=$_SESSION['condnum'];$_SESSION['condnum']=$condnum;}
+	 if (isset($_SESSION['condnum'])) {
+         $condnum=$_SESSION['condnum'];
+         $_SESSION['condnum']=$condnum;
+        }
 		else {$condnum=-1;};
-	}
+    }
+
+
+
+//Just to visualize what query is run and which recipes will be shown
+print($_SESSION['c1qt']);
+print("<br>");
+print($_SESSION['c1q']);
+print("<br>");
+if(is_null($_SESSION['choice'])){
+    print('cannot fetch choice'); //Hvis choice ikke får en verdi
+} else {
+    print($_SESSION['choice']); //hcal/lcal/hfat/lfat
+}
+
 ?>
 
 
