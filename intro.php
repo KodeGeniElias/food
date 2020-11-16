@@ -17,6 +17,10 @@ if (isset($_GET['subject'])) {$subject=$_GET['subject'];}
 	else {$subject="S$seq";}
 if (isset($_GET['condnum'])) {$condnum=$_GET['condnum'];}
 	else {$condnum=$seq;}
+// if (isset($_POST['confirm'])) {
+// 	$_SESSION['choice'] = $_GET['cooking'];
+// }
+
 
 
 $sqlquery = "INSERT INTO $table_exps (expname, ip, subject, seqno, starttime) VALUES ('$expname', '$ipstr', '$subject', $condnum, NOW())";
@@ -35,17 +39,15 @@ $s[3]=array("queryVisualRanking.php","queryRanking.php","queryVisual.php","query
 
 //randomize the query term
 shuffle($d);
-
-
-
+//Result can for example be ("Burger", "Salad", "Pasta", "Curry");
 $_SESSION['c1q']=$s[$condnum%4][0];
-$_SESSION['c1qt']=$d[0];
+$_SESSION['c1qt']=$d[0]; //Burger according to the example above
 $_SESSION['c2q']=$s[$condnum%4][1];
-$_SESSION['c2qt']=$d[1];
+$_SESSION['c2qt']=$d[1]; //Salad ...
 $_SESSION['c3q']=$s[$condnum%4][2];
-$_SESSION['c3qt']=$d[2];
+$_SESSION['c3qt']=$d[2]; //Pasta ...
 $_SESSION['c4q']=$s[$condnum%4][3];
-$_SESSION['c4qt']=$d[3];
+$_SESSION['c4qt']=$d[3]; //Curry ...
 
 
 ?>
@@ -122,20 +124,21 @@ $_SESSION['c4qt']=$d[3];
 			  <input class="w3-radio" type="radio" name="health" value="vhealhty" >
 			  <label>Very healthy</label></p>
 
-
+			
 		</div>
 
 
 		<div class="w3-white w3-container w3-center w3-padding">
 			<button class="confirm w3-button w3-center w3-round-xlarge" name="submit" value="confirm">Confirm</button>
 		</div>
+		
         <footer class="w3-container w3-blue">
 
         </footer>
 </div>
 
         <script type="text/javascript">
-
+		
 			// here the json file to generate the trial, for a particular set in the json file is generated. If the third attribute is set to random, it will select an order at random.
 			// if you enter a number, it will choose one of the orders using modulo of that number
 			// now taking the number from the condnum variable to set the order of the options
@@ -151,8 +154,6 @@ $_SESSION['c4qt']=$d[3];
 			if (choice=="" && $(".choiceButton").length>0) {event.preventDefault();return false;}
 			});
 		});
-
-
 
         </script>
     </body>
