@@ -30,6 +30,8 @@ $procdata = "";
 $nextURL = "";
 $addvar = "";
 $adddata = "";
+$health = "";
+$cooking = "";
 
 foreach ($_POST as $key => $value) { 
      switch ($key) {
@@ -53,6 +55,12 @@ foreach ($_POST as $key => $value) {
 				break;
 			case "to_email":
 				// ignore emailaddress 
+				break;
+			case "health":
+				$health = $value;
+				break;
+			case "cooking":
+				$cooking = $value;
 				break;
 			default:
 			$addvar .= mysqli_real_escape_string($link,$key).";";
