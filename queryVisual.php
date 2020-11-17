@@ -3,28 +3,28 @@
 
 //DETTE ER 3: personalized - ranked low to high in terms of salt
 
-//save new column
-$ncolumn = 0;
+// //save new column
+// $ncolumn = 0;
 
-//kolonnen med kalorier er linje 17 i filen
-if(lcal !=false){
-    $ncolumnm = 15;
-}
+// //kolonnen med kalorier er linje 17 i filen
+// if(lcal !=false){
+//     $ncolumnm = 15;
+// }
 
-if(hcal !=false){
-    $ncolumnm = 15;
-}
+// if(hcal !=false){
+//     $ncolumnm = 15;
+// }
 
 
 
-//kolonnen med fett er linje 16 i filen
-if(lfat !=false){
-    $ncolumnm = 14;
-}
+// //kolonnen med fett er linje 16 i filen
+// if(lfat !=false){
+//     $ncolumnm = 14;
+// }
 
-if(hfat !=false){
-    $ncolumnm = 14;
-}
+// if(hfat !=false){
+//     $ncolumnm = 14;
+// }
 
 
 
@@ -182,11 +182,25 @@ foreach ($hits as $hit) {
     // echo $hit->title;
     // echo $hit->ID;
     // $array[] = $hit->title;
-    $databaseUsers[] = array (
-        'recipe' => $hit->title,
-        'image' => $hit->img, //The comma is new
-        'rating' => $hit->rating  //This line is new
-    );
+    if (is_null($_SESSION['selection'])) {
+        $databaseUsers[] = array (
+            'recipe' => $hit->title,
+            'image' => $hit->img, //The comma is new
+            'rating' => $hit->rating  //This line is new
+        );
+    }
+    else {
+        $databaseUsers[] = array (
+            'recipe' => "AAAAAAAAAAAA",
+            'image' => $hit->img, //The comma is new
+            'rating' => $hit->rating  //This line is new
+        );
+    }
+    // $databaseUsers[] = array (
+    //     'recipe' => $hit->title,
+    //     'image' => $hit->img, //The comma is new
+    //     'rating' => $hit->rating  //This line is new
+    // );
 
     //if ($counter == 10)     //LIMITS THE NUMBER OF SEARCH RESULTS - if you comment this out, you get all the results.
        // break;

@@ -32,6 +32,7 @@ $addvar = "";
 $adddata = "";
 $health = "";
 $cooking = "";
+$selection = "";
 
 foreach ($_POST as $key => $value) { 
      switch ($key) {
@@ -62,6 +63,9 @@ foreach ($_POST as $key => $value) {
 			case "cooking":
 				$cooking = $value;
 				break;
+			case "selection":
+				$selection = $value;
+				break;
 			default:
 			$addvar .= mysqli_real_escape_string($link,$key).";";
 			$adddata .= "\"".mysqli_real_escape_string($link,$value)."\";" ; 
@@ -85,7 +89,7 @@ if ($_SESSION['subject']!=$subject) {$_SESSION['subject']=$subject;}
 if ($_SESSION['condnum']!=$condnum) {$_SESSION['condnum']=$condnum;}
 
 
-$_SESSION['choice'] = $_POST['cooking'];
+$_SESSION['selection'] = $_POST['cooking'];
 
 /* Redirect to a different page in the current directory that was requested */
 $host  = $_SERVER['HTTP_HOST'];

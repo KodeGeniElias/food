@@ -17,9 +17,6 @@ if (isset($_GET['subject'])) {$subject=$_GET['subject'];}
 	else {$subject="S$seq";}
 if (isset($_GET['condnum'])) {$condnum=$_GET['condnum'];}
 	else {$condnum=$seq;}
-// if (isset($_POST['confirm'])) {
-// 	$_SESSION['choice'] = $_GET['cooking'];
-// }
 
 
 
