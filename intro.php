@@ -13,10 +13,27 @@ $seq = mysqli_fetch_array($result)[0];
 
 if (is_null($seq)) $seq=0; else $seq++;
 
-if (isset($_GET['subject'])) {$subject=$_GET['subject'];}
-	else {$subject="S$seq";}
-if (isset($_GET['condnum'])) {$condnum=$_GET['condnum'];}
-	else {$condnum=$seq;}
+if (isset($_GET['subject'])) {
+		$subject=$_GET['subject'];
+	}
+	else {
+		$subject="S$seq";
+	}
+
+if (isset($_GET['condnum'])) {
+		$condnum=$_GET['condnum'];
+	}
+	else {
+		$condnum=$seq;
+	}
+if (isset($_GET['cooking'])) {
+		$selection=$_GET['cooking'];
+	}
+	else {
+		$selection="tolo";
+	}
+
+
 
 
 
@@ -45,7 +62,6 @@ $_SESSION['c3q']=$s[$condnum%4][2];
 $_SESSION['c3qt']=$d[2]; //Pasta ...
 $_SESSION['c4q']=$s[$condnum%4][3];
 $_SESSION['c4qt']=$d[3]; //Curry ...
-
 
 ?>
 <html>
@@ -86,6 +102,7 @@ $_SESSION['c4qt']=$d[3]; //Curry ...
             <!--these will be set by the script -->
 			<input type=hidden name="subject" value="<?php echo($subject)?>">
 			<input type=hidden id="condnum" name="condnum" value="<?php echo($condnum)?>">
+			<input type=hidden id="selection" name="selection" value="<?php echo($selection)?>">
             <input id="choice" type=hidden name="choice" value="">
 
 
@@ -148,7 +165,10 @@ $_SESSION['c4qt']=$d[3]; //Curry ...
      		//function that starts the page
 	$(document).ready(function () {
 		$(".confirm").click(function (event) {
-			if (choice=="" && $(".choiceButton").length>0) {event.preventDefault();return false;}
+			if (choice=="" && $(".choiceButton").length>0) {
+					
+					event.preventDefault();return false;
+				}
 			});
 		});
 

@@ -176,31 +176,17 @@ try {
 $hits  = $index->find($query_);
 $counter = 0;
 foreach ($hits as $hit) {
-
     $counter++;
+    $databaseUsers[] = array(
+        'recipe' => $hit->title,
+        'image' => $hit->img, //The comma is new
+        'rating' => $hit->rating  //This line is new
+    );
     // echo $hit->score;
     // echo $hit->title;
     // echo $hit->ID;
     // $array[] = $hit->title;
-    if (is_null($_SESSION['selection'])) {
-        $databaseUsers[] = array (
-            'recipe' => $hit->title,
-            'image' => $hit->img, //The comma is new
-            'rating' => $hit->rating  //This line is new
-        );
-    }
-    else {
-        $databaseUsers[] = array (
-            'recipe' => "AAAAAAAAAAAA",
-            'image' => $hit->img, //The comma is new
-            'rating' => $hit->rating  //This line is new
-        );
-    }
-    // $databaseUsers[] = array (
-    //     'recipe' => $hit->title,
-    //     'image' => $hit->img, //The comma is new
-    //     'rating' => $hit->rating  //This line is new
-    // );
+
 
     //if ($counter == 10)     //LIMITS THE NUMBER OF SEARCH RESULTS - if you comment this out, you get all the results.
        // break;

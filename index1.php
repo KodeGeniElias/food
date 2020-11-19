@@ -19,6 +19,7 @@ if (isset($_GET['subject'])) {
         $subject="anonymous";
     };
 }
+
 if (isset($_GET['condnum'])) {
     $condnum=$_GET['condnum'];
 } else {
@@ -29,14 +30,15 @@ if (isset($_GET['condnum'])) {
         $condnum=-1;
     };
 }
-if (isset($_POST['selection'])) {
-    $selection=$_POST['selection'];
-    $_SESSION['selection']=$selection;
+
+if (isset($_GET['selection'])) {
+    $selection=$_GET['selection'];
 } else {
     if (isset($_SESSION['selection'])) {
         $selection=$_SESSION['selection'];
+        $_SESSION['selection']=$selection;
     } else {
-        $selection="";
+        $selection="hobo";
     };
 }
 
@@ -55,7 +57,6 @@ function consoleLog($msg)
           . str_replace('<', '\\x3C', json_encode('INDEX: '.$msg))
           . ');</script>';
 }
-
 
 ?>
 
@@ -123,6 +124,7 @@ function consoleLog($msg)
 			<input type=hidden name="subject" value="<?php echo($subject)?>">
 			<input type=hidden id="condnum" name="condnum" value="<?php echo($condnum)?>">
             <input id="choice" type=hidden name="choice" value="">
+            <input type=hidden id="selection" name="selection" value="<?php echo($selection)?>">
 
 
 
