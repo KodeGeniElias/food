@@ -1,39 +1,62 @@
 <?php
 
-set_include_path(dirname(__FILE__));
-require_once 'Zend/Loader/Autoloader.php';
-$autoloader = Zend_Loader_Autoloader::getInstance();
-$autoloader->registerNamespace( 'Zend_' );
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+    set_include_path(dirname(__FILE__));
+    require_once 'Zend/Loader/Autoloader.php';
+    $autoloader = Zend_Loader_Autoloader::getInstance();
+    $autoloader->registerNamespace('Zend_');
+    ini_set('display_errors', 1);
+    error_reporting(E_ALL);
 
-session_start();
+    session_start();
 
-if (isset($_GET['subject'])) {$subject=$_GET['subject'];$_SESSION['subject']=$subject;}
- else {
-	 if (isset($_SESSION['subject'])) {$subject=$_SESSION['subject'];}
-	 else {$subject="anonymous";};
-		}
-if (isset($_GET['condnum'])) {$condnum=$_GET['condnum'];}
- else {
-	 if (isset($_SESSION['condnum'])) {
-         $condnum=$_SESSION['condnum'];
-         $_SESSION['condnum']=$condnum;
-        }
-		else {$condnum=-1;};
-    }
+if (isset($_GET['subject'])) {
+    $subject=$_GET['subject'];
+    $_SESSION['subject']=$subject;
+} else {
+    if (isset($_SESSION['subject'])) {
+        $subject=$_SESSION['subject'];
+    } else {
+        $subject="anonymous";
+    };
+}
 
+if (isset($_GET['condnum'])) {
+    $condnum=$_GET['condnum'];
+} else {
+    if (isset($_SESSION['condnum'])) {
+        $condnum=$_SESSION['condnum'];
+        $_SESSION['condnum']=$condnum;
+    } else {
+        $condnum=-1;
+    };
+}
 
+if (isset($_GET['selection'])) {
+    $selection=$_GET['selection'];
+} else {
+    if (isset($_SESSION['selection'])) {
+        $selection=$_SESSION['selection'];
+        $_SESSION['selection']=$selection;
+    } else {
+        $selection="hobo";
+    };
+}
 
 //Just to visualize what query is run and which recipes will be shown
-print($_SESSION['c1qt']);
-print("<br>");
-print($_SESSION['c1q']);
-print("<br>");
-if(is_null($_SESSION['choice'])){
-    print('cannot fetch choice'); //Hvis choice ikke får en verdi
+consoleLog($_SESSION['c1qt']);
+consoleLog($_SESSION['c1q']);
+if (is_null($_SESSION['selection'])) {
+    consoleLog('cannot fetch selection'); //Hvis selection ikke får en verdi
 } else {
-    print($_SESSION['choice']); //hcal/lcal/hfat/lfat
+    consoleLog($_SESSION['selection']); //hcal/lcal/hfat/lfat
+    consoleLog($selection);
+}
+
+function consoleLog($msg)
+{
+    echo '<script type="text/javascript">console.log('
+          . str_replace('<', '\\x3C', json_encode('INDEX: '.$msg))
+          . ');</script>';
 }
 
 ?>
@@ -101,7 +124,8 @@ if(is_null($_SESSION['choice'])){
             <!--these will be set by the script -->
 			<input type=hidden name="subject" value="<?php echo($subject)?>">
 			<input type=hidden id="condnum" name="condnum" value="<?php echo($condnum)?>">
-           <input id="choice" type=hidden name="choice" value="">
+            <input id="choice" type=hidden name="choice" value="">
+            <input type=hidden id="selection" name="selection" value="<?php echo($selection)?>">
 
 
 

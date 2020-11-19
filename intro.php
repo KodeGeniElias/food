@@ -13,13 +13,27 @@ $seq = mysqli_fetch_array($result)[0];
 
 if (is_null($seq)) $seq=0; else $seq++;
 
-if (isset($_GET['subject'])) {$subject=$_GET['subject'];}
-	else {$subject="S$seq";}
-if (isset($_GET['condnum'])) {$condnum=$_GET['condnum'];}
-	else {$condnum=$seq;}
-// if (isset($_POST['confirm'])) {
-// 	$_SESSION['choice'] = $_GET['cooking'];
-// }
+if (isset($_GET['subject'])) {
+		$subject=$_GET['subject'];
+	}
+	else {
+		$subject="S$seq";
+	}
+
+if (isset($_GET['condnum'])) {
+		$condnum=$_GET['condnum'];
+	}
+	else {
+		$condnum=$seq;
+	}
+if (isset($_GET['cooking'])) {
+		$selection=$_GET['cooking'];
+	}
+	else {
+		$selection="tolo";
+	}
+
+
 
 
 
@@ -48,7 +62,6 @@ $_SESSION['c3q']=$s[$condnum%4][2];
 $_SESSION['c3qt']=$d[2]; //Pasta ...
 $_SESSION['c4q']=$s[$condnum%4][3];
 $_SESSION['c4qt']=$d[3]; //Curry ...
-
 
 ?>
 <html>
@@ -89,6 +102,7 @@ $_SESSION['c4qt']=$d[3]; //Curry ...
             <!--these will be set by the script -->
 			<input type=hidden name="subject" value="<?php echo($subject)?>">
 			<input type=hidden id="condnum" name="condnum" value="<?php echo($condnum)?>">
+			<input type=hidden id="selection" name="selection" value="<?php echo($selection)?>">
             <input id="choice" type=hidden name="choice" value="">
 
 
@@ -112,19 +126,18 @@ $_SESSION['c4qt']=$d[3]; //Curry ...
   			  <label>I want fatty food </label></p>
 
 
-			  <p> <label class="w3-text-red"><b>I consider my eating habits to be: *</b></label></p><p>
-			  <input class="w3-radio" type="radio" name="health" value="vunhealthy" required>
+			  <p> <strike><label class="w3-text-red"><b>I consider my eating habits to be: *</b></label></strike></p><p>
+			  <input class="w3-radio" type="radio" name="health" value="vunhealthy" disabled>
 			  <label>Very unhealthy</label></p><p>
-			  <input class="w3-radio" type="radio" name="health" value="unhealthy">
+			  <input class="w3-radio" type="radio" name="health" value="unhealthy" disabled>
 			  <label>Unhealthy</label></p>
-			  <input class="w3-radio" type="radio" name="health" value="neutral" >
+			  <input class="w3-radio" type="radio" name="health" value="neutral" disabled>
 			  <label>Neither healthy nor unhealthy </label></p>
-			  <input class="w3-radio" type="radio" name="health" value="healthy" >
+			  <input class="w3-radio" type="radio" name="health" value="healthy" disabled>
 			  <label>Healthy </label></p>
-			  <input class="w3-radio" type="radio" name="health" value="vhealhty" >
+			  <input class="w3-radio" type="radio" name="health" value="vhealhty" disabled>
 			  <label>Very healthy</label></p>
-
-			
+	
 		</div>
 
 
@@ -151,7 +164,10 @@ $_SESSION['c4qt']=$d[3]; //Curry ...
      		//function that starts the page
 	$(document).ready(function () {
 		$(".confirm").click(function (event) {
-			if (choice=="" && $(".choiceButton").length>0) {event.preventDefault();return false;}
+			if (choice=="" && $(".choiceButton").length>0) {
+					
+					event.preventDefault();return false;
+				}
 			});
 		});
 
