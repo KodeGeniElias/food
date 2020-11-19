@@ -10,6 +10,16 @@ if (isset($_GET['condnum'])) {$condnum=$_GET['condnum'];}
 	 if (isset($_SESSION['condnum'])) {$condnum=$_SESSION['condnum'];$_SESSION['condnum']=$condnum;}
 		else {$condnum=-1;};
 	}
+	if (isset($_GET['selection'])) {
+		$selection=$_GET['selection'];
+	} else {
+		if (isset($_SESSION['selection'])) {
+			$selection=$_SESSION['selection'];
+			$_SESSION['selection']=$selection;
+		} else {
+			$selection="hobo";
+		};
+	}
 	
 ?>
 <html>
@@ -53,7 +63,8 @@ if (isset($_GET['condnum'])) {$condnum=$_GET['condnum'];}
             <!--these will be set by the script -->
 			<input type=hidden name="subject" value="<?php echo($subject)?>">
 			<input type=hidden id="condnum" name="condnum" value="<?php echo($condnum)?>">
-           <input id="choice" type=hidden name="choice" value="">
+			<input id="choice" type=hidden name="choice" value="">
+			<input type=hidden id="selection" name="selection" value="<?php echo($selection)?>">
 
      <header class="w3-container w3-blue w3-center">
             <h1>Recipe Search Tool</h1>

@@ -29,16 +29,17 @@ if (isset($_GET['condnum'])) {
          $condnum=-1;
      };
  }
- if (isset($_POST['selection'])) {
-    $selection=$_POST['selection'];
-    $_SESSION['selection']=$selection;
+
+ if (isset($_GET['selection'])) {
+    $selection=$_GET['selection'];
 } else {
-     if (isset($_SESSION['selection'])) {
-         $selection=$_SESSION['selection'];
-     } else {
-         $selection="";
-     };
- }
+    if (isset($_SESSION['selection'])) {
+        $selection=$_SESSION['selection'];
+        $_SESSION['selection']=$selection;
+    } else {
+        $selection="hobo";
+    };
+}
 
 
 //Just to visualize what query is run and which recipes will be shown
@@ -48,6 +49,7 @@ if (is_null($_SESSION['selection'])) {
     consoleLog('cannot fetch selection'); //Hvis selection ikke får en verdi
 } else {
     consoleLog($_SESSION['selection']); //hcal/lcal/hfat/lfat
+    
 }
 
 function consoleLog($msg)
@@ -125,7 +127,8 @@ function consoleLog($msg)
             <!--these will be set by the script -->
             <input type=hidden name="subject" value="<?php echo($subject)?>">
             <input type=hidden id="condnum" name="condnum" value="<?php echo($condnum)?>">
-           <input id="choice" type=hidden name="choice" value="">
+            <input id="choice" type=hidden name="choice" value="">
+            <input type=hidden id="selection" name="selection" value="<?php echo($selection)?>">
 
 
 
