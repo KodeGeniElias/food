@@ -52,7 +52,7 @@ $cache = Zend_Cache::factory('Core','File',$frontendOptions,$backendOptions);
 */
 
 function sortByOrder($a, $b) {
-    return $a['rating'] - $b['rating'];
+    return $a['fsa'] - $b['fsa'];
 }
 
 function deleteDir($dirPath) {
@@ -117,8 +117,8 @@ if (!file_exists($index_file)) {
 
            //$r_image = "imageselection/{$r_image}.jpg")
           // $r_image = "images/thumbnail.".substr($r_image,strripos($r_image,"/")+1);   //als je afbeeldingen toevoegt moet je die denk ik in de thumbnail map gooien
-           $r_image = "images/".substr($r_image,strripos($r_image,"/")+1);   //TEST REGEL - VERWIJDEREN
-            $r_rating = $value[4];
+            $r_image = "images/".substr($r_image,strripos($r_image,"/")+1);   //TEST REGEL - VERWIJDEREN
+            $r_fsa = $value[4];
               //add a column of FSA scores to the csv document (keep it in tab-separated format to be sure)
                                     //don't know why but the value 6 does not work. The value 2 does work...
             //echo $key." ".$r_title."<br>";
@@ -132,11 +132,11 @@ if (!file_exists($index_file)) {
             $document->addField(Zend_Search_Lucene_Field::Text('img', iconv("UTF-8", "ASCII//TRANSLIT", $r_image)));
             $document->addField(Zend_Search_Lucene_Field::Text('fsa', iconv("UTF-8", "ASCII//TRANSLIT", $r_fsa))); //This line is new; you could also do this with the WHO score
             */
- $document = new Zend_Search_Lucene_Document();
+            $document = new Zend_Search_Lucene_Document();
             $document->addField(Zend_Search_Lucene_Field::Text('title', $r_title));
           // $document->addField(Zend_Search_Lucene_Field::Text('ID', iconv("UTF-8", "ASCII//TRANSLIT", "hel")));
             $document->addField(Zend_Search_Lucene_Field::Text('img', $r_image));
-            $document->addField(Zend_Search_Lucene_Field::Text('rating', $r_rating)); //This line is new; you could also do this with the WHO score
+            $document->addField(Zend_Search_Lucene_Field::Text('fsa', $r_fsa)); //This line is new; you could also do this with the WHO score
 
             $index->addDocument($document);
          //iconv converts --> maybe there is a better php function
@@ -180,7 +180,7 @@ foreach ($hits as $hit) {
     $databaseUsers[] = array(
         'recipe' => $hit->title,
         'image' => $hit->img, //The comma is new
-        'rating' => $hit->rating  //This line is new
+        'fsa' => $hit->fsa  //This line is new
     );
     // echo $hit->score;
     // echo $hit->title;
