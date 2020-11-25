@@ -26,7 +26,7 @@ $cache = Zend_Cache::factory('Core','File',$frontendOptions,$backendOptions);
 */
 
 function sortByOrder($a, $b) {
-    return $a['fsa'] - $b['fsa'];
+    return $b['fsa'] - $a['fsa'];
 }
 
 function deleteDir($dirPath) {

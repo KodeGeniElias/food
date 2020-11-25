@@ -187,8 +187,8 @@ foreach ($hits as $hit) {
         'fsa' => $hit->fsa  //This line is new
     );
 
-    if ($counter == 12)     //LIMITS THE NUMBER OF SEARCH RESULTS - if you comment this out, you get all the results.
-        break;
+    //if ($counter == 12)     //LIMITS THE NUMBER OF SEARCH RESULTS - if you comment this out, you get all the results.
+        //break;
 
 }
 
