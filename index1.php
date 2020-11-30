@@ -49,7 +49,6 @@ if (is_null($_SESSION['selection'])) {
     consoleLog('cannot fetch selection'); //Hvis selection ikke får en verdi
 } else {
     consoleLog($_SESSION['selection']); //hcal/lcal/hfat/lfat
-    consoleLog($selection);
 }
 
 function consoleLog($msg)

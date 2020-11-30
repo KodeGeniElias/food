@@ -51,8 +51,32 @@ $backendOptions = array(
 $cache = Zend_Cache::factory('Core','File',$frontendOptions,$backendOptions);
 */
 
-function sortByOrder($a, $b) {
-    return $a['fsa'] - $b['fsa'];
+// $userselection = $_SESSION["selection"]; //Dette skal være variabelen for brukerens selection
+// $num = 4;
+
+// switch ($userselection) {
+//     case "lcal":
+//         $num = 1;
+//         break;
+//     case "hcal":
+//         $num = 2;
+//         break;
+//     case "lfat":
+//         $num = 3;
+//         break;
+//     case "hfat":
+//         $num = 4;
+//         break;
+//     default:
+//         $num = 4;
+// }
+
+function sortBySodium($a, $b) {     //Sorts by sodium - low to high
+    return $a['sodium'] - $b['sodium'];
+}
+
+function sortBySelection($c, $d) {  //Sorts by users selection - low to high
+    return $c['fsa'] - $d['fsa'];
 }
 
 function deleteDir($dirPath) {
@@ -118,7 +142,27 @@ if (!file_exists($index_file)) {
            //$r_image = "imageselection/{$r_image}.jpg")
           // $r_image = "images/thumbnail.".substr($r_image,strripos($r_image,"/")+1);   //als je afbeeldingen toevoegt moet je die denk ik in de thumbnail map gooien
             $r_image = "images/".substr($r_image,strripos($r_image,"/")+1);   //TEST REGEL - VERWIJDEREN
-            $r_fsa = $value[4];
+            $num = 1;
+            //HER KOMMER IF-SETNINGEN SOM SKAL BASERES PÅ OM DE VELGER HCAL/LCAL/LFAT/HFAT OSV
+            switch ($num) {
+                case 1:
+                    $r_fsa = $value[15]; //CAL
+                    break;
+                case 2:
+                    $r_fsa = $value[15]; //CAL
+                    break;
+                case 3:
+                    $r_fsa = $value[14]; //FAT
+                    break;
+                case 4:
+                    $r_fsa = $value[14]; //FAT
+                    break;
+            }
+
+
+            //$r_fsa = $value[14]; //DETTE ER VARIABELEN FOR Å SORTERE PÅ CAL/FAT
+            $r_sodium = $value[4]; //DETTE ER VARIABELEN FOR Å SORTERE PÅ SALT
+
               //add a column of FSA scores to the csv document (keep it in tab-separated format to be sure)
                                     //don't know why but the value 6 does not work. The value 2 does work...
             //echo $key." ".$r_title."<br>";
@@ -137,6 +181,7 @@ if (!file_exists($index_file)) {
           // $document->addField(Zend_Search_Lucene_Field::Text('ID', iconv("UTF-8", "ASCII//TRANSLIT", "hel")));
             $document->addField(Zend_Search_Lucene_Field::Text('img', $r_image));
             $document->addField(Zend_Search_Lucene_Field::Text('fsa', $r_fsa)); //This line is new; you could also do this with the WHO score
+            $document->addField(Zend_Search_Lucene_Field::Text('sodium', $r_sodium));
 
             $index->addDocument($document);
          //iconv converts --> maybe there is a better php function
@@ -180,7 +225,8 @@ foreach ($hits as $hit) {
     $databaseUsers[] = array(
         'recipe' => $hit->title,
         'image' => $hit->img, //The comma is new
-        'fsa' => $hit->fsa  //This line is new
+        'fsa' => $hit->fsa,  //This line is new
+        'sodium' => $hit->sodium
     );
     // echo $hit->score;
     // echo $hit->title;
@@ -193,7 +239,8 @@ foreach ($hits as $hit) {
 
 }
 
-usort($databaseUsers, 'sortByOrder');
+usort($databaseUsers, 'sortBySelection');
+//usort($databaseUsers[8], 'sortBySodium'); //BARE SORTER DE 8 FØRSTE, FINN EN MÅTE FOR DET (BRUK SPLIT)
 //foreach ($databaseUsers
 
 
@@ -220,6 +267,8 @@ foreach ($databaseUsers as $key => $oneUser) {
 if (empty($databaseUsers) ) {
     $status = false;
 }
+
+
 
 header('Content-Type: application/json');
 
