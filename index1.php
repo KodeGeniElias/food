@@ -150,11 +150,15 @@ function consoleLog($msg)
         <div class="typeahead__field">
  
             <span class="typeahead__query">
+                
+            <input type=hidden id="selection" name="selection" value="<?php echo($selection)?>">
                 <input class="js-typeahead-user_v1" name="user_v1[query]" onfocus="if (this.hasAttribute('readonly')) {
     this.removeAttribute('readonly');
     // fix for mobile safari to show virtual keyboard
+    
     this.blur();    this.focus();  }" type="search" placeholder="Search for recipe" autocomplete="off">
             </span>
+            
             <span class="typeahead__button">
                 <button type="submit">
                     <i class="typeahead__search-icon"></i>

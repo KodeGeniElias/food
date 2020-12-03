@@ -50,34 +50,55 @@ $backendOptions = array(
 // Ein Zend_Cache_Core Objekt erzeugen
 $cache = Zend_Cache::factory('Core','File',$frontendOptions,$backendOptions);
 */
+session_start();
 
-// $userselection = $_SESSION["selection"]; //Dette skal være variabelen for brukerens selection
-// $num = 4;
+if (isset($_GET['selection'])) {
+    $selection=$_GET['selection'];
+} else {
+    if (isset($_SESSION['selection'])) {
+        $selection=$_SESSION['selection'];
+        $_SESSION['selection']=$selection;
+    } else {
+        $selection="hobo";
+    };
+}
 
-// switch ($userselection) {
-//     case "lcal":
-//         $num = 1;
-//         break;
-//     case "hcal":
-//         $num = 2;
-//         break;
-//     case "lfat":
-//         $num = 3;
-//         break;
-//     case "hfat":
-//         $num = 4;
-//         break;
-//     default:
-//         $num = 4;
-// }
+switch ($selection) {
+    case "lcal":
+        $num = 1;
+        break;
+    case "hcal":
+        $num = 2;
+        break;
+    case "lfat":
+        $num = 3;
+        break;
+    case "hfat":
+        $num = 4;
+        break;
+    case "hobo":
+        $num = 5;
+}
 
 function sortBySodium($a, $b) {     //Sorts by sodium - low to high
     return $a['sodium'] - $b['sodium'];
 }
 
+
+//LEGG TIL EN IF-SETNING SOM SJEKKER OM DE VIL SORTERE BY LOW TO HIGH ELLER HIGH TO LOW BASERT PÅ SELECTION NÅR DET FUNKER
 function sortBySelection($c, $d) {  //Sorts by users selection - low to high
-    return $c['fsa'] - $d['fsa'];
+    if ($_SESSION['selection'] == "hcal" || $_SESSION['selection'] == "hfat")  {
+        return $d['fsa'] - $c['fsa'];
+    }
+    else {
+        return $c['fsa'] - $d['fsa'];
+    } 
 }
+
+
+
+
+
 
 function deleteDir($dirPath) {
     if (!is_dir($dirPath)) {
@@ -142,7 +163,7 @@ if (!file_exists($index_file)) {
            //$r_image = "imageselection/{$r_image}.jpg")
           // $r_image = "images/thumbnail.".substr($r_image,strripos($r_image,"/")+1);   //als je afbeeldingen toevoegt moet je die denk ik in de thumbnail map gooien
             $r_image = "images/".substr($r_image,strripos($r_image,"/")+1);   //TEST REGEL - VERWIJDEREN
-            $num = 1;
+
             //HER KOMMER IF-SETNINGEN SOM SKAL BASERES PÅ OM DE VELGER HCAL/LCAL/LFAT/HFAT OSV
             switch ($num) {
                 case 1:
@@ -157,10 +178,11 @@ if (!file_exists($index_file)) {
                 case 4:
                     $r_fsa = $value[14]; //FAT
                     break;
+                case 5:
+                    $r_fsa = $value[4];
+                    break;
             }
 
-
-            //$r_fsa = $value[14]; //DETTE ER VARIABELEN FOR Å SORTERE PÅ CAL/FAT
             $r_sodium = $value[4]; //DETTE ER VARIABELEN FOR Å SORTERE PÅ SALT
 
               //add a column of FSA scores to the csv document (keep it in tab-separated format to be sure)
@@ -239,7 +261,7 @@ foreach ($hits as $hit) {
 
 }
 
-usort($databaseUsers, 'sortBySelection');
+
 //usort($databaseUsers[8], 'sortBySodium'); //BARE SORTER DE 8 FØRSTE, FINN EN MÅTE FOR DET (BRUK SPLIT)
 //foreach ($databaseUsers
 
@@ -262,13 +284,13 @@ foreach ($databaseUsers as $key => $oneUser) {
 }*/
 
 
-
+usort($databaseUsers, 'sortBySelection');
 // Means no result were found
 if (empty($databaseUsers) ) {
     $status = false;
 }
-
-
+$splitRecipes = array_slice($databaseUsers, 0, 8);
+usort($splitRecipes, 'sortBySodium');
 
 header('Content-Type: application/json');
 
@@ -276,7 +298,7 @@ echo json_encode(array(
     "status" => $status,
     "error"  => null,
     "data"   => array(
-        "recipes"      => $databaseUsers//,
+        "recipes"      => $splitRecipes//,
         // "project"   => $resultProjects
     )
 ));
