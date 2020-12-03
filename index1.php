@@ -49,7 +49,6 @@ if (is_null($_SESSION['selection'])) {
     consoleLog('cannot fetch selection'); //Hvis selection ikke får en verdi
 } else {
     consoleLog($_SESSION['selection']); //hcal/lcal/hfat/lfat
-    consoleLog($selection);
 }
 
 function consoleLog($msg)
@@ -133,7 +132,6 @@ function consoleLog($msg)
 
 <!-- Page Content -->
 
-
 <div style="width: 100%; max-width: 500px; margin: 0 auto;">
 
     <br/><br/>
@@ -151,11 +149,15 @@ function consoleLog($msg)
         <div class="typeahead__field">
  
             <span class="typeahead__query">
+                
+            <input type=hidden id="selection" name="selection" value="<?php echo($selection)?>">
                 <input class="js-typeahead-user_v1" name="user_v1[query]" onfocus="if (this.hasAttribute('readonly')) {
     this.removeAttribute('readonly');
     // fix for mobile safari to show virtual keyboard
+    
     this.blur();    this.focus();  }" type="search" placeholder="Search for recipe" autocomplete="off">
             </span>
+            
             <span class="typeahead__button">
                 <button type="submit">
                     <i class="typeahead__search-icon"></i>

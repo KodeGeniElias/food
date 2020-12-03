@@ -1,32 +1,6 @@
 <?php
 
-
 //DETTE ER 3: personalized - ranked low to high in terms of salt
-
-// //save new column
-// $ncolumn = 0;
-
-// //kolonnen med kalorier er linje 17 i filen
-// if(lcal !=false){
-//     $ncolumnm = 15;
-// }
-
-// if(hcal !=false){
-//     $ncolumnm = 15;
-// }
-
-
-
-// //kolonnen med fett er linje 16 i filen
-// if(lfat !=false){
-//     $ncolumnm = 14;
-// }
-
-// if(hfat !=false){
-//     $ncolumnm = 14;
-// }
-
-
 
 //echo $_SERVER["DOCUMENT_ROOT"];
 //console.log("hallo");
@@ -50,9 +24,48 @@ $backendOptions = array(
 // Ein Zend_Cache_Core Objekt erzeugen
 $cache = Zend_Cache::factory('Core','File',$frontendOptions,$backendOptions);
 */
+session_start();
 
-function sortByOrder($a, $b) {
-    return $a['fsa'] - $b['fsa'];
+if (isset($_GET['selection'])) {
+    $selection=$_GET['selection'];
+} else {
+    if (isset($_SESSION['selection'])) {
+        $selection=$_SESSION['selection'];
+        $_SESSION['selection']=$selection;
+    } else {
+        $selection="hobo";
+    };
+}
+
+switch ($selection) {
+    case "lcal":
+        $num = 1;
+        break;
+    case "hcal":
+        $num = 2;
+        break;
+    case "lfat":
+        $num = 3;
+        break;
+    case "hfat":
+        $num = 4;
+        break;
+    case "hobo":
+        $num = 5;
+}
+
+function sortBySodium($a, $b) {     //Sorts by sodium - low to high
+    return $a['sodium'] - $b['sodium'];
+}
+
+//LEGG TIL EN IF-SETNING SOM SJEKKER OM DE VIL SORTERE BY LOW TO HIGH ELLER HIGH TO LOW BASERT PÅ SELECTION NÅR DET FUNKER
+function sortBySelection($c, $d) {  //Sorts by users selection - low to high
+    if ($_SESSION['selection'] == "hcal" || $_SESSION['selection'] == "hfat")  {
+        return $d['fsa'] - $c['fsa'];
+    }
+    else {
+        return $c['fsa'] - $d['fsa'];
+    } 
 }
 
 function deleteDir($dirPath) {
@@ -72,7 +85,6 @@ function deleteDir($dirPath) {
     }
     rmdir($dirPath);
 }
-
 
 $index_file = $_SERVER["DOCUMENT_ROOT"].'/Food/index3';
 //$index_file = $_SERVER["DOCUMENT_ROOT"].'/d828113e/Food/index3';
@@ -118,7 +130,28 @@ if (!file_exists($index_file)) {
            //$r_image = "imageselection/{$r_image}.jpg")
           // $r_image = "images/thumbnail.".substr($r_image,strripos($r_image,"/")+1);   //als je afbeeldingen toevoegt moet je die denk ik in de thumbnail map gooien
             $r_image = "images/".substr($r_image,strripos($r_image,"/")+1);   //TEST REGEL - VERWIJDEREN
-            $r_fsa = $value[4];
+
+            //HER KOMMER IF-SETNINGEN SOM SKAL BASERES PÅ OM DE VELGER HCAL/LCAL/LFAT/HFAT OSV
+            switch ($num) {
+                case 1:
+                    $r_fsa = $value[15]; //CAL
+                    break;
+                case 2:
+                    $r_fsa = $value[15]; //CAL
+                    break;
+                case 3:
+                    $r_fsa = $value[14]; //FAT
+                    break;
+                case 4:
+                    $r_fsa = $value[14]; //FAT
+                    break;
+                case 5:
+                    $r_fsa = $value[4];
+                    break;
+            }
+
+            $r_sodium = $value[4]; //DETTE ER VARIABELEN FOR Å SORTERE PÅ SALT
+
               //add a column of FSA scores to the csv document (keep it in tab-separated format to be sure)
                                     //don't know why but the value 6 does not work. The value 2 does work...
             //echo $key." ".$r_title."<br>";
@@ -137,6 +170,7 @@ if (!file_exists($index_file)) {
           // $document->addField(Zend_Search_Lucene_Field::Text('ID', iconv("UTF-8", "ASCII//TRANSLIT", "hel")));
             $document->addField(Zend_Search_Lucene_Field::Text('img', $r_image));
             $document->addField(Zend_Search_Lucene_Field::Text('fsa', $r_fsa)); //This line is new; you could also do this with the WHO score
+            $document->addField(Zend_Search_Lucene_Field::Text('sodium', $r_sodium));
 
             $index->addDocument($document);
          //iconv converts --> maybe there is a better php function
@@ -147,9 +181,6 @@ if (!file_exists($index_file)) {
 } else {
     $index = Zend_Search_Lucene::open($index_file);
 }
-
-
-
 
 $query = (!empty($_GET['q'])) ? strtolower($_GET['q']) : null;
 
@@ -180,20 +211,15 @@ foreach ($hits as $hit) {
     $databaseUsers[] = array(
         'recipe' => $hit->title,
         'image' => $hit->img, //The comma is new
-        'fsa' => $hit->fsa  //This line is new
+        'fsa' => $hit->fsa,  //This line is new
+        'sodium' => $hit->sodium
     );
-    // echo $hit->score;
-    // echo $hit->title;
-    // echo $hit->ID;
-    // $array[] = $hit->title;
-
 
     //if ($counter == 10)     //LIMITS THE NUMBER OF SEARCH RESULTS - if you comment this out, you get all the results.
        // break;
 
 }
 
-usort($databaseUsers, 'sortByOrder');
 //foreach ($databaseUsers
 
 
@@ -214,12 +240,13 @@ foreach ($databaseUsers as $key => $oneUser) {
         }
 }*/
 
-
-
+usort($databaseUsers, 'sortBySelection');
 // Means no result were found
 if (empty($databaseUsers) ) {
     $status = false;
 }
+$splitRecipes = array_slice($databaseUsers, 0, 8);
+usort($splitRecipes, 'sortBySodium');
 
 header('Content-Type: application/json');
 
@@ -227,17 +254,9 @@ echo json_encode(array(
     "status" => $status,
     "error"  => null,
     "data"   => array(
-        "recipes"      => $databaseUsers//,
+        "recipes"      => $splitRecipes//,
         // "project"   => $resultProjects
     )
 ));
-
-
-
-
-
-
-
-
 
 ?>
