@@ -137,7 +137,10 @@ $_SESSION['c4qt']=$d[3]; //Curry ...
 			  <label>Healthy </label></p>
 			  <input class="w3-radio" type="radio" name="health" value="vhealhty">
 			  <label>Very healthy</label></p>
-	
+
+			  <p><label class="w3-text-red"><b>I was born in: </b></label></p>
+			  <input name type="number" min="1900" max="2020" step="1" value="1997" />
+			  <label>Birth-year</label>
 		</div>
 
 
