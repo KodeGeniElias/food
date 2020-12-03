@@ -1,32 +1,6 @@
 <?php
 
-
 //DETTE ER 3: personalized - ranked low to high in terms of salt
-
-// //save new column
-// $ncolumn = 0;
-
-// //kolonnen med kalorier er linje 17 i filen
-// if(lcal !=false){
-//     $ncolumnm = 15;
-// }
-
-// if(hcal !=false){
-//     $ncolumnm = 15;
-// }
-
-
-
-// //kolonnen med fett er linje 16 i filen
-// if(lfat !=false){
-//     $ncolumnm = 14;
-// }
-
-// if(hfat !=false){
-//     $ncolumnm = 14;
-// }
-
-
 
 //echo $_SERVER["DOCUMENT_ROOT"];
 //console.log("hallo");
@@ -84,7 +58,6 @@ function sortBySodium($a, $b) {     //Sorts by sodium - low to high
     return $a['sodium'] - $b['sodium'];
 }
 
-
 //LEGG TIL EN IF-SETNING SOM SJEKKER OM DE VIL SORTERE BY LOW TO HIGH ELLER HIGH TO LOW BASERT PÅ SELECTION NÅR DET FUNKER
 function sortBySelection($c, $d) {  //Sorts by users selection - low to high
     if ($_SESSION['selection'] == "hcal" || $_SESSION['selection'] == "hfat")  {
@@ -94,11 +67,6 @@ function sortBySelection($c, $d) {  //Sorts by users selection - low to high
         return $c['fsa'] - $d['fsa'];
     } 
 }
-
-
-
-
-
 
 function deleteDir($dirPath) {
     if (!is_dir($dirPath)) {
@@ -117,7 +85,6 @@ function deleteDir($dirPath) {
     }
     rmdir($dirPath);
 }
-
 
 $index_file = $_SERVER["DOCUMENT_ROOT"].'/Food/index3';
 //$index_file = $_SERVER["DOCUMENT_ROOT"].'/d828113e/Food/index3';
@@ -215,9 +182,6 @@ if (!file_exists($index_file)) {
     $index = Zend_Search_Lucene::open($index_file);
 }
 
-
-
-
 $query = (!empty($_GET['q'])) ? strtolower($_GET['q']) : null;
 
 if (!isset($query)) {
@@ -250,19 +214,12 @@ foreach ($hits as $hit) {
         'fsa' => $hit->fsa,  //This line is new
         'sodium' => $hit->sodium
     );
-    // echo $hit->score;
-    // echo $hit->title;
-    // echo $hit->ID;
-    // $array[] = $hit->title;
-
 
     //if ($counter == 10)     //LIMITS THE NUMBER OF SEARCH RESULTS - if you comment this out, you get all the results.
        // break;
 
 }
 
-
-//usort($databaseUsers[8], 'sortBySodium'); //BARE SORTER DE 8 FØRSTE, FINN EN MÅTE FOR DET (BRUK SPLIT)
 //foreach ($databaseUsers
 
 
@@ -283,7 +240,6 @@ foreach ($databaseUsers as $key => $oneUser) {
         }
 }*/
 
-
 usort($databaseUsers, 'sortBySelection');
 // Means no result were found
 if (empty($databaseUsers) ) {
@@ -302,13 +258,5 @@ echo json_encode(array(
         // "project"   => $resultProjects
     )
 ));
-
-
-
-
-
-
-
-
 
 ?>

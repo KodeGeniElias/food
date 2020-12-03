@@ -132,7 +132,6 @@ function consoleLog($msg)
 
 <!-- Page Content -->
 
-
 <div style="width: 100%; max-width: 500px; margin: 0 auto;">
 
     <br/><br/>

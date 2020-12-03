@@ -126,16 +126,16 @@ $_SESSION['c4qt']=$d[3]; //Curry ...
   			  <label>I want fatty food </label></p>
 
 
-			  <p> <strike><label class="w3-text-red"><b>I consider my eating habits to be: *</b></label></strike></p><p>
-			  <input class="w3-radio" type="radio" name="health" value="vunhealthy" disabled>
+			  <p><label class="w3-text-red"><b>I consider my eating habits to be: *</b></label></p><p>
+			  <input class="w3-radio" type="radio" name="health" value="vunhealthy">
 			  <label>Very unhealthy</label></p><p>
-			  <input class="w3-radio" type="radio" name="health" value="unhealthy" disabled>
+			  <input class="w3-radio" type="radio" name="health" value="unhealthy">
 			  <label>Unhealthy</label></p>
-			  <input class="w3-radio" type="radio" name="health" value="neutral" disabled>
+			  <input class="w3-radio" type="radio" name="health" value="neutral">
 			  <label>Neither healthy nor unhealthy </label></p>
-			  <input class="w3-radio" type="radio" name="health" value="healthy" disabled>
+			  <input class="w3-radio" type="radio" name="health" value="healthy">
 			  <label>Healthy </label></p>
-			  <input class="w3-radio" type="radio" name="health" value="vhealhty" disabled>
+			  <input class="w3-radio" type="radio" name="health" value="vhealhty">
 			  <label>Very healthy</label></p>
 	
 		</div>
