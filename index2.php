@@ -41,7 +41,6 @@ if (isset($_GET['condnum'])) {
     };
 }
 
-
 //Just to visualize what query is run and which recipes will be shown
 consoleLog($_SESSION['c2qt']);
 consoleLog($_SESSION['c2q']);
@@ -49,7 +48,6 @@ if (is_null($_SESSION['selection'])) {
     consoleLog('cannot fetch selection'); //Hvis selection ikke får en verdi
 } else {
     consoleLog($_SESSION['selection']); //hcal/lcal/hfat/lfat
-    
 }
 
 function consoleLog($msg)
@@ -60,8 +58,6 @@ function consoleLog($msg)
 }
 
 ?>
-
-
 
 
 <!DOCTYPE html>
@@ -136,7 +132,6 @@ function consoleLog($msg)
 
 <!-- Page Content -->
 
-
 <div style="width: 100%; max-width: 500px; margin: 0 auto;">
 
     <br/><br/>
@@ -149,17 +144,19 @@ function consoleLog($msg)
 
         </p>
 
-
     <form id="form-user_v1" name="form-user_v1">
     <div class="typeahead__container">
         <div class="typeahead__field">
  
             <span class="typeahead__query">
+
                 <input class="js-typeahead-user_v1" name="user_v1[query]" onfocus="if (this.hasAttribute('readonly')) {
     this.removeAttribute('readonly');
     // fix for mobile safari to show virtual keyboard
+
     this.blur();    this.focus();  }" type="search" placeholder="Search for recipe" autocomplete="off">
             </span>
+            
             <span class="typeahead__button">
                 <button type="submit">
                     <i class="typeahead__search-icon"></i>

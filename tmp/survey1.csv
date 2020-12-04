@@ -1,0 +1,3 @@
+"id","expname","subject","ip","condnum","choice","submitted","event","name","value","time","queryterm","querytype","Rec-q1","Rec-q2","Rec-q3","Rec-q5","Ch-q1","Ch-q2","Ch-q4","Ch-q5","submit"
+"2","survey1","S199","::1","199","","2020-12-03 15:12:13","onload","body","body","29","Curry","queryVisualRanking.php","-2","2","2","-1","-1","-1","-1","-1","confirm"
+"2","survey1","S199","::1","199","","2020-12-03 15:12:13","submit","submit","succeeded","42239","Curry","queryVisualRanking.php","-2","2","2","-1","-1","-1","-1","-1","confirm"
